@@ -8,7 +8,7 @@ export class MockSmsProvider implements SmsProvider {
 
   async sendOtp(to: string, otp: string): Promise<void> {
     this.sent.push({ to, body: `Your Kissmet verification code is ${otp}`, otp });
-    console.log(`[MockSMS] OTP queued for ${maskPhone(to)}`);
+    console.log(`[MockSMS] OTP for ${maskPhone(to)}: ${otp}`);
   }
 
   async sendMessage(to: string, body: string): Promise<{ providerMessageId: string }> {
