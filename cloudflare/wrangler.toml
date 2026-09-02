@@ -1,0 +1,18 @@
+name = "kissmet-api"
+main = "src/index.ts"
+compatibility_date = "2025-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "development"
+
+# database_id is a local-dev placeholder. Do not invent a Cloudflare account ID.
+[[d1_databases]]
+binding = "DB"
+database_name = "kissmet-hostel"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "DOCUMENTS"
+bucket_name = "kissmet-documents"

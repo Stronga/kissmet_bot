@@ -1,0 +1,24 @@
+{
+  "name": "kissmet-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8787",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "migrate:local": "wrangler d1 migrations apply kissmet-hostel --local",
+    "seed:local": "wrangler d1 execute kissmet-hostel --local --file=seeds/development.sql",
+    "db:verify:local": "wrangler d1 execute kissmet-hostel --local --file=tests/schema-verification.sql"
+  },
+  "dependencies": {
+    "hono": "^4.9.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "@types/sql.js": "^1.4.9",
+    "sql.js": "^1.13.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "wrangler": "4.19.2"
+  }
+}

@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0d9488;
+}
+
+body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+
+@media print {
+  .no-print { display: none !important; }
+  .print-receipt { box-shadow: none !important; }
+}
