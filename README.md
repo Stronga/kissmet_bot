@@ -25,14 +25,14 @@ Resident demo login: institution `ug`, student ID `10938472`. Mock SMS prints th
 
 ## Local run
 
-This repo was installed with `bun`. From the repo root:
+From the repo root:
 
 ```bash
 cd cloudflare
-bun install
-bun run migrate:local
-bun run seed:local
-bun run dev
+npm install
+npm run migrate:local
+npm run seed:local
+npm run dev
 ```
 
 In another terminal:
@@ -40,8 +40,8 @@ In another terminal:
 ```bash
 cd admin-frontend
 cp .env.example .env
-bun install
-bun run dev
+npm install
+npm run dev
 ```
 
 In a third terminal:
@@ -49,8 +49,8 @@ In a third terminal:
 ```bash
 cd resident-frontend
 cp .env.example .env
-bun install
-bun run dev
+npm install
+npm run dev
 ```
 
 Admin: http://localhost:5173  
@@ -60,9 +60,9 @@ API: http://localhost:8787
 ## Tests
 
 ```bash
-cd cloudflare && bun run typecheck && bun test && bun run db:verify:local
-cd admin-frontend && bun run typecheck && bun test
-cd resident-frontend && bun run typecheck && bun test
+cd cloudflare && npm run typecheck && npm test && npm run db:verify:local
+cd admin-frontend && npm run typecheck && npm test
+cd resident-frontend && npm run typecheck && npm test
 ```
 
 Constraint SQL under `cloudflare/tests/constraint-*.sql` is expected to fail (covered by vitest).
