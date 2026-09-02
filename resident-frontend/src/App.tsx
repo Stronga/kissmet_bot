@@ -47,16 +47,18 @@ function VerifyOtp() {
     } catch (err) { setError(err instanceof Error ? err.message : "Invalid code"); }
   }
   return (
-    <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center p-6">
-      <h1 className="text-2xl font-semibold">Enter verification code</h1>
-      <p className="mt-2 text-sm text-slate-500">If we have that account, a code was sent to the registered phone. Development OTPs are printed in the API console.</p>
-      {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
-      <form onSubmit={submit} className="mt-6 space-y-4">
-        <label className="block text-sm">6-digit code
-          <input value={otp} onChange={(e) => setOtp(e.target.value)} maxLength={6} className="mt-1 min-h-12 w-full rounded-2xl border px-3" />
-        </label>
-        <button className="min-h-12 w-full rounded-2xl bg-primary text-white">Verify</button>
-      </form>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h1 className="text-2xl font-semibold">Enter verification code</h1>
+        <p className="mt-2 text-sm text-slate-500">If we have that account, a code was sent to the registered phone. Development OTPs are printed in the API console.</p>
+        {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
+        <form onSubmit={submit} className="mt-6 max-w-md space-y-4">
+          <label className="block text-sm">6-digit code
+            <input value={otp} onChange={(e) => setOtp(e.target.value)} maxLength={6} className="mt-1 min-h-12 w-full rounded-2xl border px-3" />
+          </label>
+          <button className="min-h-12 w-full rounded-2xl bg-primary text-white md:w-auto md:min-w-40">Verify</button>
+        </form>
+      </div>
     </div>
   );
 }

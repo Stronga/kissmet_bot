@@ -10,7 +10,7 @@ Locked rules: approval does not book or allocate; payment verification does not 
 
 - `cloudflare/` — Worker API on port 8787
 - `admin-frontend/` — Admin portal on port 5173
-- `resident-frontend/` — Resident portal on port 5174
+- `resident-frontend/` — Resident portal on port 5174 (responsive web app; full viewport on desktop)
 - `docs/` — canonical specifications
 
 ## Seed Super Admin

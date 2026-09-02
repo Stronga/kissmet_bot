@@ -9,7 +9,7 @@ function Box({ children }: { children: React.ReactNode }) {
   return <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">{children}</section>;
 }
 function Primary({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button {...props} className="min-h-12 w-full rounded-2xl bg-primary px-4 text-base font-medium text-white disabled:opacity-50">{children}</button>;
+  return <button {...props} className="min-h-12 w-full rounded-2xl bg-primary px-4 text-base font-medium text-white disabled:opacity-50 md:w-auto md:min-w-40">{children}</button>;
 }
 function Field(props: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
   const { label, ...rest } = props;
@@ -36,20 +36,22 @@ export function LoginPage() {
     finally { setBusy(false); }
   }
   return (
-    <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center p-6">
-      <h1 className="text-2xl font-semibold">Resident log in</h1>
-      <p className="mt-1 text-sm text-slate-500">Use your institution and student ID. We will send an OTP to your registered phone.</p>
-      {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
-      <form onSubmit={submit} className="mt-6 space-y-4">
-        <label className="block text-sm">Institution
-          <select className="mt-1 min-h-12 w-full rounded-2xl border px-3" value={institutionCode} onChange={(e) => setInstitutionCode(e.target.value)}>
-            {institutions.map((i) => <option key={i.id} value={i.code}>{i.name}</option>)}
-          </select>
-        </label>
-        <Field label="Student ID" value={studentId} onChange={(e) => setStudentId(e.target.value)} required />
-        <Primary disabled={busy}>{busy ? "Sending…" : "Send OTP"}</Primary>
-      </form>
-      <Link to="/register" className="mt-6 text-center text-sm text-primary">New applicant? Register</Link>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h1 className="text-2xl font-semibold">Resident log in</h1>
+        <p className="mt-1 text-sm text-slate-500">Use your institution and student ID. We will send an OTP to your registered phone.</p>
+        {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
+        <form onSubmit={submit} className="mt-6 max-w-md space-y-4">
+          <label className="block text-sm">Institution
+            <select className="mt-1 min-h-12 w-full rounded-2xl border px-3" value={institutionCode} onChange={(e) => setInstitutionCode(e.target.value)}>
+              {institutions.map((i) => <option key={i.id} value={i.code}>{i.name}</option>)}
+            </select>
+          </label>
+          <Field label="Student ID" value={studentId} onChange={(e) => setStudentId(e.target.value)} required />
+          <Primary disabled={busy}>{busy ? "Sending…" : "Send OTP"}</Primary>
+        </form>
+        <Link to="/register" className="mt-6 block text-center text-sm text-primary md:text-left">New applicant? Register</Link>
+      </div>
     </div>
   );
 }
@@ -73,21 +75,23 @@ export function RegisterPage() {
     } catch (err) { setError(err instanceof Error ? err.message : "Registration failed"); }
   }
   return (
-    <div className="mx-auto min-h-screen max-w-lg p-6">
-      <h1 className="text-2xl font-semibold">Create account</h1>
-      {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
-      <form onSubmit={submit} className="mt-6 space-y-3">
-        <Field label="First name" name="firstName" required />
-        <Field label="Last name" name="lastName" required />
-        <Field label="Middle name" name="middleName" />
-        <label className="block text-sm">Gender<select name="gender" className="mt-1 min-h-12 w-full rounded-2xl border px-3"><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select></label>
-        <label className="block text-sm">Institution<select name="institutionId" className="mt-1 min-h-12 w-full rounded-2xl border px-3">{institutions.map((i) => <option key={i.id} value={i.id}>{i.name}</option>)}</select></label>
-        <Field label="Student ID" name="studentId" required />
-        <Field label="Phone" name="phone" required placeholder="+233..." />
-        <Field label="Email" name="email" />
-        <Primary>Send verification code</Primary>
-      </form>
-      <Link to="/login" className="mt-4 block text-center text-sm text-primary">Already registered? Log in</Link>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h1 className="text-2xl font-semibold">Create account</h1>
+        {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
+        <form onSubmit={submit} className="mt-6 max-w-md space-y-3">
+          <Field label="First name" name="firstName" required />
+          <Field label="Last name" name="lastName" required />
+          <Field label="Middle name" name="middleName" />
+          <label className="block text-sm">Gender<select name="gender" className="mt-1 min-h-12 w-full rounded-2xl border px-3"><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select></label>
+          <label className="block text-sm">Institution<select name="institutionId" className="mt-1 min-h-12 w-full rounded-2xl border px-3">{institutions.map((i) => <option key={i.id} value={i.id}>{i.name}</option>)}</select></label>
+          <Field label="Student ID" name="studentId" required />
+          <Field label="Phone" name="phone" required placeholder="+233..." />
+          <Field label="Email" name="email" />
+          <Primary>Send verification code</Primary>
+        </form>
+        <Link to="/login" className="mt-4 block text-center text-sm text-primary md:text-left">Already registered? Log in</Link>
+      </div>
     </div>
   );
 }
@@ -123,14 +127,16 @@ export function VerifyOtpPage() {
     } catch (err) { setError(err instanceof Error ? err.message : "Invalid code"); }
   }
   return (
-    <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center p-6">
-      <h1 className="text-2xl font-semibold">Enter verification code</h1>
-      <p className="mt-2 text-sm text-slate-500">Check the phone number we have on file. Development OTPs are printed in the API console.</p>
-      {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
-      <form onSubmit={submit} className="mt-6 space-y-4">
-        <Field label="6-digit code" value={otp} onChange={(e) => setOtp(e.target.value)} maxLength={6} required />
-        <Primary>Verify</Primary>
-      </form>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h1 className="text-2xl font-semibold">Enter verification code</h1>
+        <p className="mt-2 text-sm text-slate-500">Check the phone number we have on file. Development OTPs are printed in the API console.</p>
+        {error ? <p className="mt-3 text-sm text-rose-700">{error}</p> : null}
+        <form onSubmit={submit} className="mt-6 max-w-md space-y-4">
+          <Field label="6-digit code" value={otp} onChange={(e) => setOtp(e.target.value)} maxLength={6} required />
+          <Primary>Verify</Primary>
+        </form>
+      </div>
     </div>
   );
 }
@@ -181,16 +187,18 @@ export function HomePage() {
         <h1 className="text-2xl font-semibold">Welcome, {data.profile?.first_name}</h1>
         <p className="text-sm text-slate-500">{data.profile?.resident_code} · {data.profile?.institution_name}</p>
       </div>
-      <Box>
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Your journey</p>
-        <ol className="mt-3 space-y-2">{steps.map((s) => <li key={s.label} className="flex justify-between text-sm"><span>{s.label}</span><span className="capitalize text-slate-500">{s.state.replace("_", " ")}</span></li>)}</ol>
-      </Box>
-      <Link to={next.to ?? "/home"} className="block rounded-3xl bg-primary p-5 text-white">
-        <p className="text-sm opacity-80">Next action</p>
-        <p className="mt-1 text-xl font-semibold">{next.title}</p>
-        <p className="mt-2 text-sm opacity-90">{next.body}</p>
-      </Link>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+        <Box>
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Your journey</p>
+          <ol className="mt-3 space-y-2">{steps.map((s) => <li key={s.label} className="flex justify-between text-sm"><span>{s.label}</span><span className="capitalize text-slate-500">{s.state.replace("_", " ")}</span></li>)}</ol>
+        </Box>
+        <Link to={next.to ?? "/home"} className="block rounded-3xl bg-primary p-5 text-white">
+          <p className="text-sm opacity-80">Next action</p>
+          <p className="mt-1 text-xl font-semibold">{next.title}</p>
+          <p className="mt-2 text-sm opacity-90">{next.body}</p>
+        </Link>
+      </div>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Link to="/application" className="rounded-3xl bg-white p-4 shadow-sm"><p className="text-xs text-slate-500">Application</p><p className="font-medium capitalize">{data.application?.status ?? "Not started"}</p></Link>
         <Link to="/booking" className="rounded-3xl bg-white p-4 shadow-sm"><p className="text-xs text-slate-500">Booking</p><p className="font-medium capitalize">{data.booking?.status ?? "None"}</p></Link>
         <Link to="/payments" className="rounded-3xl bg-white p-4 shadow-sm"><p className="text-xs text-slate-500">Outstanding</p><p className="font-medium">{data.paymentSummary ? formatMinorUnits(data.paymentSummary.outstandingMinor, data.paymentSummary.currency) : "Unavailable"}</p></Link>
@@ -237,6 +245,7 @@ export function DocumentsPage() {
       <h1 className="text-2xl font-semibold">Documents</h1>
       <p className="text-sm text-slate-500">PDF, JPG, PNG or WebP — maximum 5 MB. Files stay private.</p>
       {error ? <p className="text-sm text-rose-700">{error}</p> : null}
+      <div className="md:grid md:grid-cols-2 md:gap-4 space-y-4 md:space-y-0">
       {["student_card", "ghana_card"].map((type) => {
         const doc = current(type);
         return (
@@ -247,6 +256,7 @@ export function DocumentsPage() {
           </Box>
         );
       })}
+      </div>
     </div>
   );
 }
@@ -319,6 +329,7 @@ export function PaymentsPage() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-semibold">Payments</h1>
+      <div className="md:grid md:grid-cols-2 md:gap-4 space-y-4 md:space-y-0">
       {booking?.paymentSummary ? (
         <Box>
           <p>Total: {formatMinorUnits(booking.paymentSummary.totalAmountMinor, booking.paymentSummary.currency)}</p>
@@ -337,6 +348,7 @@ export function PaymentsPage() {
           {msg ? <p className="mt-2 text-sm">{msg}</p> : null}
         </Box>
       ) : null}
+      </div>
       <ul className="space-y-2">{items.map((p) => <li key={p.id} className="rounded-2xl bg-white p-4"><p className="font-medium">{p.payment_reference}</p><p className="text-sm">{formatMinorUnits(p.amount_minor, p.currency)} · {p.status === "submitted" ? "Awaiting verification" : p.status}</p></li>)}</ul>
       <Link to="/receipts/latest" className="text-sm text-primary">View receipts</Link>
     </div>
@@ -392,6 +404,7 @@ export function MaintenancePage() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-semibold">Maintenance</h1>
+      <div className="md:grid md:grid-cols-2 md:gap-4 space-y-4 md:space-y-0">
       <Box>
         <form onSubmit={create} className="space-y-3">
           <select name="category" className="min-h-12 w-full rounded-2xl border px-3"><option>plumbing</option><option>electrical</option><option>furniture</option><option>cleaning</option><option>security</option><option>other</option></select>
@@ -401,6 +414,7 @@ export function MaintenancePage() {
         </form>
       </Box>
       {!items.length ? <p className="text-sm text-slate-500">You have not reported any hostel issues.</p> : items.map((m) => <Box key={m.id}><p className="font-medium">{m.request_number}</p><p className="text-sm">{m.title} · {m.status}</p></Box>)}
+      </div>
     </div>
   );
 }
